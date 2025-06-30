@@ -18,6 +18,10 @@ public class UserSignupService {
     @Transactional
     public UserSignupDTO save(UserSignupDTO dto) {
 
+        if(null == dto.getEmail() || dto.getEmail().isBlank()){
+            throw new IllegalArgumentException("Email is invalid");
+        }
+
 //        validate if email already exists --> (true) then update existing data else save new data
         UserSignup userSignup = repository.findByEmail(dto.getEmail()).map(
                 existingUser -> {
